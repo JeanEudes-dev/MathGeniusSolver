@@ -37,13 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'algebra',
-    'arithmetic',
-    'calculus',
-    'differential_equation',
-    'linear_algebra',
-    'numerical_methods',
-    'trigonometry',
+    'solver',
     'rest_framework',
 ]
 
