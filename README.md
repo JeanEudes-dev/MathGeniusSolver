@@ -21,14 +21,18 @@ MathGeniusSolver is a Django and React-powered web application designed for math
    ```bash
    git clone https://github.com/JeanEudes-dev/MathGeniusSolver.git
 2. Set up the backend (Django):
+   ```bash
    cd Math/backend
    pip install -r requirements.txt
    python manage.py migrate
    python manage.py runserver
+   
 3. Set up the frontend (React):
+   ```bash
    cd MathGeniusSolver/frontend
    npm install
    npm start
+   
 4. Open your browser and visit http://localhost:3000/ to access the MathGeniusSolver web app.
 
 ## Usage
