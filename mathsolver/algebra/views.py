@@ -18,7 +18,7 @@ class AlgebraSolver(APIView):
         # Save to the database
         algebra_history = AlgebraHistory.objects.create(
             expression=expression,
-            result=result
+            result=result['result']
         )
 
-        return Response({'result': result, 'history_id': algebra_history.id}, status=status.HTTP_200_OK)
+        return Response({'result': result['result'], 'explanation': result['explanation'], 'history_id': algebra_history.id}, status=status.HTTP_200_OK)
