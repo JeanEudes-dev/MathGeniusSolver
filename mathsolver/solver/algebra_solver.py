@@ -4,7 +4,10 @@ import re
 def preprocess_expression(expression):
     # Replace LaTeX-style fractions like \frac{a}{b} with sympy.Rational() syntax
     expression = re.sub(r'\\frac{(\d+)}{(\d+)}', r'sympy.Rational(\1, \2)', expression)
+    # Replace LaTeX-style square roots like \sqrt{4} with sympy.sqrt() syntax
+    expression = re.sub(r'\\sqrt{([^{}]+)}', r'sympy.sqrt(\1)', expression)
     return expression
+
 
 
 def latex_to_sympy(latex_expression):
@@ -25,12 +28,14 @@ def perform_algebraic_calculations(latex_expression):
                 explanation += f"Solution: {sol}\n"
 
             return {"result": solution, "explanation": explanation[:-1]}
-
+        
+        preproceed = preprocess_expression(expr)
+        
         # Solve the expression symbolically
-        solution = solve(expr)
+        solution = solve(preproceed)
         
         if not solution:
-            return {"result": latex(expr), "explanation": "Numeric solution"}
+            return {"result": None, "explanation": "The expression has no symbolic solution."}
         else:
             explanation = ""
             
@@ -41,13 +46,14 @@ def perform_algebraic_calculations(latex_expression):
                     "explanation": explanation[:-1]}
     
     except Exception as e:
-        print(f"error: {str(e)}")
-        return None
+        error_message = f"Error: {str(e)}"
+        return {"result": 'None', "explanation": error_message}
 
 # Testing code
 if __name__ == '__main__':
-    print(perform_algebraic_calculations("x^2 + 3*x - 4"))
-    print(perform_algebraic_calculations("x=4+-4"))
+    print(perform_algebraic_calculations("2*2 + 3*99 - 4"))
+    print(perform_algebraic_calculations("Eq(x, 4 + -4)"))
     print(perform_algebraic_calculations("sqrt(5)*sin(pi/5)"))
     print(perform_algebraic_calculations("\\frac{7}{9}"))
     print(perform_algebraic_calculations("\\frac{32}{6}"))
+    print(perform_algebraic_calculations("1/0"))  # Division by zero, expect an error
