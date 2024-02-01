@@ -4,7 +4,10 @@ import { Card, Typography } from 'antd';
 const { Title } = Typography;
 
 interface OutputProps {
-  result: string | null;
+  result: {
+    result: string;
+    explanation: string;
+  }
 }
 
 const Output: React.FC<OutputProps> = ({ result }) => {
@@ -15,7 +18,8 @@ const Output: React.FC<OutputProps> = ({ result }) => {
         <Title level={4}>Output</Title>
       }
     >
-      {result}
+      <Typography.Paragraph>{result.result}</Typography.Paragraph>
+      <Typography.Paragraph type="secondary">{result.explanation}</Typography.Paragraph>
     </Card>
   );
 };

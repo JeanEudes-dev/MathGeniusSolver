@@ -13,6 +13,7 @@ const Inputs: React.FC<{ onInputChange: (formula: string) => void }> = ({ onInpu
   function handleChange(mathField: { latex: () => string }) {
     setFormula(mathField.latex());
     onInputChange(mathField.latex());
+    console.log(mathField)
   }
 
   function handleInsertSymbol(symbol: string) {

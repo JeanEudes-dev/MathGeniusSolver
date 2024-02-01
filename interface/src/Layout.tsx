@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { Breadcrumb, Layout, Input, Button, Select, Typography, theme, Flex } from 'antd';
+import { Breadcrumb, Layout, Button, Select, Typography, theme, Flex } from 'antd';
 import Inputs from './Inputs';
 import Output from './Output';
+import axios from 'axios';
 
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 const { Title } = Typography;
+
+
+type result = {
+    result: string;
+    explanation: string;
+}
 
 
 const Layouts: React.FC = () => {
@@ -15,7 +22,7 @@ const Layouts: React.FC = () => {
 
     const [selectedCategory, setSelectedCategory] = useState<string>('algebra');
     const [mathProblem, setMathProblem] = useState<string>('');
-    const [result, setResult] = useState<string | null>(null);
+    const [result, setResult] = useState<result>({ explanation: "", result: "" });
 
     const handleCategoryChange = (value: string) => {
         setSelectedCategory(value);
@@ -23,11 +30,20 @@ const Layouts: React.FC = () => {
 
     const handleInputChange = (input: string) => {
         setMathProblem(input);
+        console.log(input)
     };
 
-    const handleSolveClick = () => {
-
-        setResult('42');
+    const handleSolveClick = async () => {
+        if (!mathProblem || selectedCategory === '') return;
+        try {
+            // eslint-disable-next-line no-undef
+            const response = await axios.post(`http://localhost:8000/api/solve/algebra/`, { expression: mathProblem });
+            setResult(response.data);
+            console.log(response)
+        } catch (error) {
+            console.error(error);
+        }
+        // setResult('42');
     };
 
     return (
@@ -62,8 +78,9 @@ const Layouts: React.FC = () => {
                     </Select>
                     <Flex gap={"middle"}>
                         <Inputs onInputChange={handleInputChange} />
-                        <Output />
+                        <Output result={result} />
                     </Flex>
+                    <Button type='primary' className='button' onClick={handleSolveClick}>Solve</Button>
                 </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>

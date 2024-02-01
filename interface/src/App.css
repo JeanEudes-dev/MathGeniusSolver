@@ -24,3 +24,8 @@ p {
   width: 30px;
   height: 30px;
 }
+
+.button {
+  margin: 10px;
+  margin-left: 100px;
+}
