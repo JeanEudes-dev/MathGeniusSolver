@@ -19,5 +19,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('', include('solver.urls')), # Include default urls of solver app
+     path('api/', include('solver.urls')), # Include default urls of solver app
 ]
