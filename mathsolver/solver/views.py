@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from .algebra_solver import perform_algebraic_calculations
+from .algebra_solver import  solve_algebra_equation
 from .arithmetic_solver import perform_arithmetic_calculations
 from .linear_algebra_solver import solve_linear_algebra_problem
 from .trygonometry_solver import solve_trigonometry
@@ -13,12 +13,12 @@ class AlgebraSolver(APIView):
     def post(self, request):
         # Retrieve data from request.data
         expression = request.data.get('expression')
-
+        expression = 'x**2+5=0'
         # Perform algebraic calculations using the external function
-        result = perform_algebraic_calculations(expression)
+        result = solve_algebra_equation(expression)
 
         if result is None:
-            return Response({'error': 'Invalid expression'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Invalid expression Please check your Expression and try again'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Save to the database
         algebra_history = AlgebraHistory.objects.create(

@@ -6,7 +6,7 @@ def get_variables_from_expression(expression_data):
     expression = sympify(expression_data)
     return expression.free_symbols
 
-def solve_algebra_equation(expression_data):
+def solve_equation(expression_data):
     # Get variables from the expression
     variables = get_variables_from_expression(expression_data.replace('=', ''))
 
@@ -30,15 +30,8 @@ def solve_algebra_equation(expression_data):
         solution = None
         explanation = f"Error in solving equation {equation}: {e}"
 
-    if not solution:
-        return {"result": None, "explanation": "The expression has no symbolic solution."}
-    else:
-        explanation = ""
-        for sol in solution:
-            explanation += f"Solution: {sol}, Expression Value: {sol.evalf()}\n"
-                
-        return {
-                "result": solution[0],  
-                # "result": latex(solution[0]),  
-                "explanation": explanation[:-1]
-            }
+    print(explanation)
+
+# Example usage
+expression_data = '8/7*x+9*y=b*y=9/3*r'
+solve_equation(expression_data)
