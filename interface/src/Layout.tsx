@@ -37,7 +37,7 @@ const Layouts: React.FC = () => {
         if (!mathProblem || selectedCategory === '') return;
         try {
             // eslint-disable-next-line no-undef
-            const response = await axios.post(`http://localhost:8000/api/solve/algebra/`, { expression: mathProblem });
+            const response = await axios.post(`http://localhost:8000/api/solve/${selectedCategory}/`, { expression: mathProblem });
             setResult(response.data);
             console.log(response)
         } catch (error) {
