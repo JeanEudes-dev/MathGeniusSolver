@@ -27,6 +27,7 @@ const Inputs: React.FC<{ onInputChange: (formula: string) => void }> = ({ onInpu
         <hr />
         <TexSymbols onClick={handleInsertSymbol} />
       </Flex>
+      
     </Card>
   );
 };

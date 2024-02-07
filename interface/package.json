@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.2.18",
     "antd": "^5.13.3",
     "axios": "^1.6.7",
+    "katex": "^0.16.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-mathquill": "^1.0.3",
@@ -46,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/katex": "^0.16.7"
   }
 }

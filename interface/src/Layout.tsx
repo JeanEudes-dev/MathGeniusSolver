@@ -41,9 +41,8 @@ const Layouts: React.FC = () => {
             setResult(response.data);
             console.log(response)
         } catch (error) {
-            console.error(error);
+            // console.error(error);
         }
-        // setResult('42');
     };
 
     return (

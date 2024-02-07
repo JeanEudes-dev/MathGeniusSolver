@@ -1,3 +1,4 @@
+import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,7 +14,9 @@ class AlgebraSolver(APIView):
     def post(self, request):
         # Retrieve data from request.data
         expression = request.data.get('expression')
-        expression = 'x**2+5=0'
+        # expression = '2+x**2 + 1=5'
+        expression = 'x**2 =2'
+        # expression = '(x**2+5)=0'
         # Perform algebraic calculations using the external function
         result = solve_algebra_equation(expression)
 
@@ -25,8 +28,7 @@ class AlgebraSolver(APIView):
             expression=expression,
             result=result['result']
         )
-
-        return Response({'result': result['result'], 'explanation': result['explanation'], 'history_id': algebra_history.id}, status=status.HTTP_200_OK)
+        return Response({'result': json.dumps(result['result']), 'explanation': result['explanation'], 'history_id': algebra_history.id}, status=status.HTTP_200_OK)
     
 
 

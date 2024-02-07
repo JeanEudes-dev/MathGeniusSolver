@@ -1,5 +1,5 @@
+import re
 from sympy import symbols, Eq, solve, sympify
-import re  # Import the 're' module for regular expressions
 
 def get_variables_from_expression(expression_data):
     # Collect all variables from the expression
@@ -8,8 +8,8 @@ def get_variables_from_expression(expression_data):
 
 def solve_algebra_equation(expression_data):
     # Get variables from the expression
-    variables = get_variables_from_expression(expression_data.replace('=', ''))
-
+    variables = get_variables_from_expression(expression_data.replace("(",'').replace(')','').replace('=', '+'))
+    print(variables)
     # Split the expression into individual equations based on non-alphanumeric characters
     equations_data = [eq.strip() for eq in re.split(r'[^a-zA-Z0-9_*]', expression_data) if eq]
 
@@ -18,14 +18,20 @@ def solve_algebra_equation(expression_data):
         lhs, rhs = equations_data[0], '0'
     else:
         lhs, *rhs_list = equations_data
-        rhs = '+'.join(rhs_list)
-
+        rhs = "+".join(rhs_list)
+        # print(lhs)
+        # for i in range(len(rhs_list)):
+        #     rhs_list[i] = f"{rhs_list[i]}"
+        # rhs = "".join(rhs_list)
+    
     # Rearrange the equation to isolate variables on one side
     equation = Eq(sympify(lhs) - sympify(rhs), 0)
 
     try:
         solution = solve(equation, variables)
-        explanation = f"Solutions for {', '.join(map(str, equation.free_symbols))}: {solution}"
+        explanation = ""
+        for sol in solution:
+            explanation += f"Solutions for {', '.join(map(str, equation.free_symbols))}: {sol}, Expression Value: {sol.evalf()}\n"
     except Exception as e:
         solution = None
         explanation = f"Error in solving equation {equation}: {e}"
@@ -33,12 +39,7 @@ def solve_algebra_equation(expression_data):
     if not solution:
         return {"result": None, "explanation": "The expression has no symbolic solution."}
     else:
-        explanation = ""
-        for sol in solution:
-            explanation += f"Solution: {sol}, Expression Value: {sol.evalf()}\n"
-                
         return {
-                "result": solution[0],  
-                # "result": latex(solution[0]),  
-                "explanation": explanation[:-1]
-            }
+            "result": str(solution[0]),  
+            "explanation": explanation[:-1]
+        }
